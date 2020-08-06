@@ -9,7 +9,7 @@ interface excerciseResult {
 }
 
 const calculateExercises = (days: Array<number>, target: number): excerciseResult => {
-    const trainingDays: number = days.filter(d => d === 0).length
+    const trainingDays: number = days.filter(d => d !== 0).length
 
     const average:number = days.reduce((a: number, b: number) => {return a + b}, 0) / days.length;
 
@@ -54,4 +54,37 @@ const calculateExercises = (days: Array<number>, target: number): excerciseResul
     return result
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+interface DaysAndTarget {
+    days: Array<number>;
+    target: number;
+  }
+
+const parseArgs = (args: Array<string>): DaysAndTarget => {
+    if (args.length < 4) throw new Error("Not enough arguments.");
+
+    let days: Array<number> = [];
+    let target: number = 0;
+
+    try {
+        if (!isNaN(Number(args[2]))) {
+            target = Number(args[2])
+        }
+    
+        for (let i = 3; i < args.length; i++) {
+            if (!isNaN(Number(args[i]))) {
+                days.push(Number(args[i]));
+            }
+        }
+    } catch(err) {
+            throw new Error("Invalid arguments, must be numbers")
+        }
+    return {days, target}
+    
+}
+
+try {
+    const {days, target} = parseArgs(process.argv);
+    console.log(calculateExercises(days, target))
+} catch (error) {
+    console.log(error.message)
+}
