@@ -17,7 +17,7 @@ const calculateBmi = (height: number, weight: number): string => {
         return "Underweight";
     } else if (bmi >= 15) {
         return "Severely underweight";
-    } else if (bmi < 15) {
+    } else {
         return "Very severely underweight";
     }
 }
@@ -47,3 +47,5 @@ try {
 } catch (error) {
     console.log(error.message)
 }
+
+export {calculateBmi};
