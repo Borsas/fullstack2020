@@ -1,6 +1,5 @@
-
 const calculateBmi = (height: number, weight: number): string => {
-    height = height / 100
+    height = height / 100;
     const bmi = weight / (height * height);
 
     if (bmi >= 40){
@@ -9,7 +8,7 @@ const calculateBmi = (height: number, weight: number): string => {
         return "Obese Class II (Severely obese)";
     } else if (bmi >= 30) {
         return "Obese Class I (Moderately obese)";
-    } else if (bmi >= 25) {
+    } else if (bmi >= 25) {
         return "Overweight";
     } else if (bmi >= 18.5) {
         return "Normal (healthy weight)";
@@ -20,7 +19,7 @@ const calculateBmi = (height: number, weight: number): string => {
     } else {
         return "Very severely underweight";
     }
-}
+};
 
 interface MultiplyValues {
     value1: number;
@@ -35,17 +34,17 @@ const parse = (args: Array<string>): MultiplyValues => {
         return {
          value1: Number(args[2]),
          value2: Number(args[3])
-        }      
+        };      
     } else {
         throw new Error("Arguments must be numbers.");
     }
-}
+};
 
 try {
     const {value1, value2} = parse(process.argv);
-    console.log(calculateBmi(value1, value2))
+    console.log(calculateBmi(value1, value2));
 } catch (error) {
-    console.log(error.message)
+    console.log(error);
 }
 
 export {calculateBmi};
