@@ -1,4 +1,4 @@
-import {NewPatientEntry, Gender} from "../types";
+import {NewPatientEntry, Gender, Entry} from "../types";
 
 const isString = (text: any): text is string => {
     return typeof text === "string"|| text instanceof String;
@@ -34,13 +34,21 @@ const parseDate = (date: any): string => {
     return date;
 };
 
+const parseEntries = (entries: Entry[]): Entry[] => {
+    if (!entries) {
+        throw new Error("Incorrect entries");
+    }
+    return entries;
+};
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const toNewPatientEntry = (object:NewPatientEntry):NewPatientEntry => {
     return {
         name: parseString(object.name),
         dateOfBirth: parseDate(object.dateOfBirth),
         gender: parseGender(object.gender),
-        occupation: parseString(object.occupation)
+        occupation: parseString(object.occupation),
+        entries: parseEntries(object.entries)
     };
 };
 
