@@ -26,7 +26,7 @@ router.get("/:id", (req, res) => {
     if (patient) {
         res.json(patient);
     } else {
-        res.status(400).send({"message": "Invalid id"});
+        res.status(400).send({"message": "Invalid patient"});
     }
 });
 
