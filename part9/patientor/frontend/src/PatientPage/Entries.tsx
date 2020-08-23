@@ -1,12 +1,22 @@
 import React from "react";
-import { Entry } from "../types";
+import { Entry, Diagnosis } from "../types";
+import { useStateValue } from "../state";
 
 import { Divider, Header } from "semantic-ui-react";
 
 const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
+    const [{ diagnoses }] = useStateValue();
 
     if (!entries) {
         return null;
+    }
+
+    const getDiagnoseName = (code: string):string => {
+        const name = Object.values(diagnoses).find((c:Diagnosis) => c.code === code);
+        if (name === undefined) {
+            return "";
+        }
+        return name.name;
     }
 
     return (
@@ -22,7 +32,9 @@ const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
                             </div>
                             <ul>
                                 {entry.diagnosisCodes?.map((code: string) => {
-                                    return <li key={code}>{code}</li>
+                                    return <li key={code}>
+                                        {code} {getDiagnoseName(code)}
+                                        </li>
                                 })}
                             </ul>
                         </div>
