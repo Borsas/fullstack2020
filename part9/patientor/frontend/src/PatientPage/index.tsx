@@ -9,6 +9,8 @@ import { useStateValue, addCachePatient } from "../state";
 
 import { apiBaseUrl } from "../constants";
 
+import Entries from "./Entries";
+
 const PatientPage: React.FC = () => {
     const [{ cachedPatients }, dispatch] = useStateValue();
 
@@ -59,6 +61,7 @@ const PatientPage: React.FC = () => {
             </Header>
             <div><b>SSN: {patient.ssn}</b></div>
             <div><b>Occupation: {patient.occupation}</b></div>
+            <Entries entries={patient.entries}/>
         </Container>
         </div>
         
