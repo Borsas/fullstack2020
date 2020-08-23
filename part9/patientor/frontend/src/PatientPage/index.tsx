@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import { Container, Header, Icon } from "semantic-ui-react";
 
 import { Patient } from "../types";
-import { useStateValue } from "../state";
+import { useStateValue, addCachePatient } from "../state";
 
 import { apiBaseUrl } from "../constants";
 
@@ -14,28 +14,28 @@ const PatientPage: React.FC = () => {
 
     const { id } = useParams<{ id: string }>();
     const patient:Patient | undefined = Object.values(cachedPatients).find((patient: Patient) => {
-        return patient.id === id
+        return patient.id === id;
     });
 
     React.useEffect(() => {
-        const fetchPatientList = async () => {
+        const fetchOnePatient = async () => {
             try {
                 const {data: newPatient } = await axios.get<Patient>(
                     `${apiBaseUrl}/patients/${id}`
                 );
-                dispatch({type: "ADD_CACHE_PATIENT", payload: newPatient});
+                dispatch(addCachePatient(newPatient));
                 console.log("Got", newPatient);
             } catch (e) {
                 console.error(e);
             }
         }
         if (!patient) {
-            fetchPatientList();
+            fetchOnePatient();
         }
     }, [dispatch]);
 
     type IconType = "mars" | "venus" | "genderless";
-    const getGenderIcon= (gender: string): IconType  => {
+    const getGenderIcon = (gender: string): IconType  => {
         switch (gender) {
             case "male":
                 return "mars";

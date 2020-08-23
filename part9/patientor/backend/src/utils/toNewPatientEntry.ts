@@ -36,7 +36,7 @@ const parseDate = (date: any): string => {
 
 const parseEntries = (entries: Entry[]): Entry[] => {
     if (!entries) {
-        throw new Error("Incorrect entries");
+        return [];
     }
     return entries;
 };
