@@ -4,6 +4,10 @@ import { useStateValue } from "../state";
 
 import { Divider, Header } from "semantic-ui-react";
 
+import HospitalEntry from "./Entries/HospitalEntry";
+import HealthCheck from "./Entries/HealthCheck";
+import Occupational from "./Entries/Occupational";
+
 const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
     const [{ diagnoses }] = useStateValue();
 
@@ -19,26 +23,32 @@ const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
         return name.name;
     }
 
+    const assertNever = (value: never): never => {
+        throw new Error(
+            `Unhandled discriminated union member: ${JSON.stringify(value)}`
+        );
+      };
+
     return (
         <div>
             <Divider/>
             <Header as="h3">Entries</Header>
             <div>
                 {entries.map((entry: Entry) => {
-                    return (
-                        <div key={entry.id}>
-                            <div>
-                                {entry.date} <i>{entry.description}</i>
-                            </div>
-                            <ul>
-                                {entry.diagnosisCodes?.map((code: string) => {
-                                    return <li key={code}>
-                                        {code} {getDiagnoseName(code)}
-                                        </li>
-                                })}
-                            </ul>
-                        </div>
-                    )
+                    switch (entry.type) {
+                        case "Hospital":
+                            return <HospitalEntry key={entry.id} 
+                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                        case "HealthCheck":
+                            return <HealthCheck key={entry.id} 
+                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                        case "OccupationalHealthcare":
+                            return <Occupational key={entry.id} 
+                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                        default:
+                            return assertNever(entry);
+                    }
+                    
                 })}
             </div>
         </div>
