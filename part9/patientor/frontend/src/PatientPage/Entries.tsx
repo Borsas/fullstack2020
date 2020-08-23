@@ -1,6 +1,5 @@
 import React from "react";
-import { Entry, Diagnosis } from "../types";
-import { useStateValue } from "../state";
+import { Entry } from "../types";
 
 import { Divider, Header } from "semantic-ui-react";
 
@@ -9,18 +8,8 @@ import HealthCheck from "./Entries/HealthCheck";
 import Occupational from "./Entries/Occupational";
 
 const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
-    const [{ diagnoses }] = useStateValue();
-
     if (!entries) {
         return null;
-    }
-
-    const getDiagnoseName = (code: string):string => {
-        const name = Object.values(diagnoses).find((c:Diagnosis) => c.code === code);
-        if (name === undefined) {
-            return "";
-        }
-        return name.name;
     }
 
     const assertNever = (value: never): never => {
@@ -38,13 +27,13 @@ const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
                     switch (entry.type) {
                         case "Hospital":
                             return <HospitalEntry key={entry.id} 
-                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                            entry={entry}/>
                         case "HealthCheck":
                             return <HealthCheck key={entry.id} 
-                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                            entry={entry}/>
                         case "OccupationalHealthcare":
                             return <Occupational key={entry.id} 
-                            entry={entry} getDiagnoseName={getDiagnoseName}/>
+                            entry={entry}/>
                         default:
                             return assertNever(entry);
                     }
