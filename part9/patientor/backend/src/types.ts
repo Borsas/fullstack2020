@@ -62,8 +62,19 @@ export enum Gender {
     Other = "other"
 }
 
+export enum EntryType {
+  "HealthCheck", 
+  "OccupationalHealthcare",
+  "Hospital"
+}
+
 export type PatientWithNoSSN = Omit<Patient, "ssn">;
 
 export type NewPatientEntry = Omit<Patient, "id">;
+
+export type NewMedicalEntry = Omit<Entry, "id">;
+export type NewHospitalEntry = Omit<HospitalEntry, "id">;
+export type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, "id">;
+export type NewHealthCheckEntry = Omit<HealthCheckEntry, "id">;
 
 export type PublicPatient = Omit<Patient, "ssn" | "entries" >;
