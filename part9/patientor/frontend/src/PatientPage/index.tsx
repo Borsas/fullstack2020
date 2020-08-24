@@ -26,7 +26,6 @@ const PatientPage: React.FC = () => {
                     `${apiBaseUrl}/patients/${id}`
                 );
                 dispatch(addCachePatient(newPatient));
-                console.log("Got", newPatient);
             } catch (e) {
                 console.error(e);
             }

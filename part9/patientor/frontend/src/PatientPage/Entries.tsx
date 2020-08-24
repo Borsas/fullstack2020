@@ -6,6 +6,7 @@ import { Divider, Header } from "semantic-ui-react";
 import HospitalEntry from "./Entries/HospitalEntry";
 import HealthCheck from "./Entries/HealthCheck";
 import Occupational from "./Entries/Occupational";
+import AddNewEntry from "./AddNewEntry/AddNewEntry";
 
 const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
     if (!entries) {
@@ -22,6 +23,7 @@ const Entries: React.FC<{entries: Entry[] | undefined}> = ({entries}) => {
         <div>
             <Divider/>
             <Header as="h3">Entries</Header>
+            <AddNewEntry/>
             <div>
                 {entries.map((entry: Entry) => {
                     switch (entry.type) {

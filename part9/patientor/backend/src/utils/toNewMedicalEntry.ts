@@ -41,6 +41,15 @@ const returnOccupational = (object: NewOccupationalHealthcareEntry):NewMedicalEn
     if(!object.employerName) {
         throw new Error("Invalid type data");
     }
+
+    if (object.sickLeave?.endDate && object.sickLeave.startDate){
+        return {
+            ...checkCommon(object),
+            ...object.sickLeave,
+            employerName: object.employerName
+        } as NewMedicalEntry;
+    }
+
     return {
         ...checkCommon(object),
         employerName: object.employerName

@@ -1,5 +1,5 @@
 import { State } from "./state";
-import { Patient, Diagnosis } from "../types";
+import { Patient, Diagnosis, Entry } from "../types";
 
 export type Action =
   | {
@@ -17,6 +17,10 @@ export type Action =
   | {
       type: "SET_DIAGNOSES";
       payload: Diagnosis[];
+  }
+  | {
+    type: "SET_CACHE_PATIENT_LIST";
+    payload: Patient[];
   };
 
 export const reducer = (state: State, action: Action): State => {
@@ -30,6 +34,17 @@ export const reducer = (state: State, action: Action): State => {
             {}
           ),
           ...state.patients
+        }
+      };
+    case "SET_CACHE_PATIENT_LIST":
+      return {
+        ...state,
+        cachedPatients: {
+          ...action.payload.reduce(
+            (memo, patient) => ({ ...memo, [patient.id]: patient }),
+            {}
+          ),
+          ...state.cachedPatients
         }
       };
     case "ADD_PATIENT":
@@ -89,5 +104,12 @@ export const setDiagnosesList = (diagnosesFromApi: Diagnosis[]): Action => {
   return {
     type: "SET_DIAGNOSES",
     payload: diagnosesFromApi
+  }
+}
+
+export const setCachePatientList = (patients: Patient[]): Action => {
+  return {
+    type: "SET_CACHE_PATIENT_LIST",
+    payload: patients
   }
 }
